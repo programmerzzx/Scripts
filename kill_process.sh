@@ -3,4 +3,4 @@
 read -p "输入进程名: " pName
 
 #echo $pName
-ps -ef | grep -i $pName | awk ' NR == 1 { print $2; }' | xargs kill -9
+ps -ef | grep -i $pName | awk ' NR == 1 { print $2; }' | xargs kill -9 | grep -i $pName
