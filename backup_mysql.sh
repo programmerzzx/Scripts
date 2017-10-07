@@ -1,10 +1,12 @@
 #!/bin/bash
 # 备份数据库到 码云 私有仓库
-database=badblog
+
+read -p "输入要备份的数据:" database
+
+# git 项目目录
 git_dir=~/document/git/Backup
 
 function backup() {
-
 	# 导出数据库数据
 	mysqldump $database > "$git_dir/$database.sql"
 
