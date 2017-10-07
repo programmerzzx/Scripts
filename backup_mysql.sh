@@ -16,8 +16,6 @@ function backup() {
 
 }
 
-#backup
-
 for(( ; ; ));{
 	backup
 	# 每隔 1天 备份
