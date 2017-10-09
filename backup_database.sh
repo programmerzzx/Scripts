@@ -37,7 +37,7 @@ backup() {
 	fi	
 
 	git commit -m $database
-	git push origin maste -f
+	git push origin master -f
 
 }
 
