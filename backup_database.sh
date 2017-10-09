@@ -9,7 +9,7 @@ database=badblog
 # git 项目目录
 git_dir=~/document/git/Backup
 
-# 备份函数
+
 backup() {
 	
 	# 判断是否是 root 
@@ -19,11 +19,11 @@ backup() {
 		exit
 	fi
 
-	# 导出数据库数据 (没有指定用户名及密码是因为在 /etc/mysql/my.cnf 配置了用户名及密码 )
+	# 导出数据库数据
 	# --dump-date 将导出时间添加至输出文件中, --skip-dump-date 关闭选项 ; 目的为判断 sql 文件是否有数据更变
 	mysqldump -u$mysql_user -p$mysql_password $database --skip-dump-date > "$git_dir/$database.sql"
 
-	# git 备份至码云
+	# git 备份至码云私有仓库
 	cd $git_dir
 
 	# 判断数据是否 modified	
@@ -37,7 +37,7 @@ backup() {
 	fi	
 
 	git commit -m $database
-	git push origin master
+	git push origin maste -f
 
 }
 
