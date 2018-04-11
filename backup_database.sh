@@ -12,22 +12,18 @@ git_dir=~/document/git/Backup
 
 backup() {
 	
-	# 判断是否是 root 
-	if [ $UID -ne 0 ];
-	then
-		echo "非 root 用户无法执行!"
-		exit
-	fi
-
 	# 导出数据库数据
 	# --dump-date 将导出时间添加至输出文件中, --skip-dump-date 关闭选项 ; 目的为判断 sql 文件是否有数据更变
 	mysqldump -u$mysql_user -p$mysql_password $database --skip-dump-date > "$git_dir/$database.sql"
 
+	# 导出 qitan 数据库
+	mysqldump -u$mysql_user -p$mysql_password qitan --skip-dump-date > "$git_dir/qitan.sql"
 	# git 备份至码云私有仓库
 	cd $git_dir
 
 	# 判断数据是否 modified	
-	git add $database.sql
+#	git add $database.sql
+	git add *
 	
 	modified=`git status | grep modified`
 	if [ -z "$modified" ];
@@ -36,7 +32,7 @@ backup() {
 		exit
 	fi	
 
-	git commit -m $database
+	git commit -m 数据库备份成功
 	git push origin master -f
 
 }
