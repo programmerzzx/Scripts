@@ -2,26 +2,37 @@
 
 # 批量重命名文件
 
-read -p "输入源目录(请一次正确输入目录): " src_dir
-
-# 删除最后一个斜杠
-src_dir=${src_dir%\/}
+src_dir='/d/video/老友记_第10季'
+tar_dir='/f/老友记'
 
 # 判断目录是否存在
-if [ ! -d $src_dir ];
+if [[ ! -d $src_dir ]];
 then
-	echo "该目录不存在！"
+	echo "源目录不存在！"
 	exit 2
 fi
 
+# 判断存放不存在则创建
+if [[ ! -d $tar_dir ]];
+then
+	mkdir -p $tar_dir
+	# exit 2
+fi
+
 # 在 sed 中使用自定义变量要使用双引号(很谜)
-read -p "输入正则表达式: " reg
-read -p "输入替换内容: " replacement
+# reg='.*(S0.E.{2}).*'
+reg='.*s\.(.*)\.中.*'
+replacement='\1'
+prefix='Friends_'
+format='.mp4'
 
 for f in `ls $src_dir` ;
 do
-	new_filename=`echo $f | sed "s/$reg/$replacement/"`
-	#echo $src_dir/$f $src_dir/$new_filename
-	mv $src_dir/$f $src_dir/$new_filename
+	# toUpperCase
+	typeset -u episode
+	episode=`echo $f | sed -r "s/$reg/$replacement/"`
+	new_file=$prefix$episode$format
+	echo $src_dir/$f $tar_dir/$new_file	
+	cp $src_dir/$f $tar_dir/$new_file	
 done
 
