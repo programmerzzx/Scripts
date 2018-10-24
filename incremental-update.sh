@@ -38,7 +38,7 @@ exportFile="$startVersion""-""$endVersion.txt"
 
 # 找到 WEB-INF/classes 目录
 function getClassesDir {
-    local classesDir=`find $localProjectDir -type d | sed -n "/WEB-INF\/classes$/p" | tail -1`
+    local classesDir=`find $localProjectDir -type d -path '*/WEB-INF/classes' | tail -1`
     echo $classesDir
 }
 
