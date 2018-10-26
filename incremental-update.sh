@@ -124,6 +124,17 @@ function copyFile {
     cp $srcFile $tarFile
 }
 
+# 比较结果
+function compareResult {
+    local tempSrcFile='source.txt'
+    local tempTargetFile='target.txt'
+    local sourceContent=`cat $exportFile | sed s!$svnProjectUrl!! | sort   > $tempSrcFile`
+    local targetContent=`find $exportDir -type f | sed s!$exportDir!! | sort > $tempTargetFile`
+    echo "========== 比较结果 ============================================"
+    echo "========== 第一部分为目标目录文件，第二部分为源目录文件 =============="
+    diff $tempSrcFile $tempTargetFile --left-column
+    rm -f $tempSrcFile $tempTargetFile
+}
 
 # 主函数
 function main {
@@ -141,7 +152,8 @@ function main {
          copyFile $sourceFile $targetFile
         fi
     done
-
+    
+    compareResult
 }
 
 main
