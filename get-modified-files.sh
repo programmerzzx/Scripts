@@ -1,15 +1,16 @@
 #!/bin/bash
-# author zhognzx
+# author zhongzx
 
-# find recent modified files between tow git commits and save to destination directory
+# find recent modified files between tow git commits and then save to destination directory
+# run `sh get-modified-file.sh` command on (Git?) Bash
 
 
 # 文件最终保存目录
-saveDir='/e/gogs/fszqt/test-shell'
-# 开始提交
-beginCommit='6630888c'
-# 截止提交
-endCommit='193954c7'
+saveDir="$(pwd)/modified-files"
+# 开始提交 hash 值
+beginCommit='95933781'
+# 截止提交 hash 值
+endCommit='850c100f'
 
 # 修改的文件
 modifiedFiles=`git diff $beginCommit $endCommit --name-only`
@@ -40,4 +41,3 @@ do
     fi
 
 done 
-
